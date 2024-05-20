@@ -1,0 +1,46 @@
+name: 'GitHub Actions Demo'
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+jobs:
+  my_first_job:
+    name: My first job
+    # 运行所需要的虚拟机环境
+    runs-on: ubuntu-latest
+    # 每个 Job 的运行步骤
+    steps:
+    - name: Print a greeting
+      env:
+        MY_VAR: Hi there! My name is
+        FIRST_NAME: C
+        LAST_NAME: M
+      run: |
+        # 运行的命令或者 action
+        echo $MY_VAR $FIRST_NAME $LAST_NAME.
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.14.x
+          cache: 'yarn'
+      - run: yarn # 运行 yarn
+      - run: yarn build # 运行 yarn build
+      - run: ls -a # 查看打包后的目录文件
+      
+      # 隐私参数，如用户名、密码等，使用${{ secrets.XXX }}或者${{ env.XXX }}，参数可在setting里填写，避免泄漏
+      # - name: upload file
+      #   uses: kostyaten/ssh-server-deploy@v4
+      #   with: 
+      #     host: ${{ secrets.HOST }}
+      #     username: ${{ secrets.USERNAME }}
+      #     password: ${{ secrets.PASSWORD }}
+      #     port: 22
+      #     scp_source: "./dist"
+      #     scp_target: ${{ secrets.TARGET }}
