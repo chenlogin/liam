@@ -29,13 +29,15 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16.14.x
-          cache: 'yarn'
       - name: Install dependencies  
         run: yarn
+        shell: bash
       - name: Build project  
-        run: yarn build  
+        run: yarn build
+        shell: bash  
       - name: List files  
         run: ls -a
+        shell: bash 
       
       # 隐私参数，如用户名、密码等，使用${{ secrets.XXX }}或者${{ env.XXX }}，参数可在setting里填写，避免泄漏
       # - name: upload file
