@@ -30,9 +30,12 @@ jobs:
         with:
           node-version: 16.14.x
           cache: 'yarn'
-      - run: yarn # 运行 yarn
-      - run: yarn build # 运行 yarn build
-      - run: ls -a # 查看打包后的目录文件
+      - name: Install dependencies  
+        run: yarn
+      - name: Build project  
+        run: yarn build  
+      - name: List files  
+        run: ls -a
       
       # 隐私参数，如用户名、密码等，使用${{ secrets.XXX }}或者${{ env.XXX }}，参数可在setting里填写，避免泄漏
       # - name: upload file
