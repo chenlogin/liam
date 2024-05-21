@@ -44,7 +44,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3  
         with:  
           github_token: ${{ secrets.GITHUB_TOKEN }}  
-          publish_dir: ./dist # 或者你的构建输出目录
+          publish_dir: ../dist # 或者你的构建输出目录
           keep_files: false
           force_orphan: true
           commit_message: 'Deploy to GitHub Pages'
