@@ -1,4 +1,4 @@
-name: 'GitHub Actions Demo'
+name: 'Build and Deploy to GitHub Pages'
 
 on:
   workflow_dispatch:
@@ -36,16 +36,26 @@ jobs:
         run: yarn build
         shell: bash  
       - name: List files  
-        run: ls -a
-        shell: bash 
+        run: ls -l dist/
+        shell: bash
+      - name: Deploy to GitHub Pages
+        # peaceiris/actions-gh-pages@v3这个Action它首先会检查gh-pages分支是否存在，如果不存在，则会创建该分支
+        # ./dist 中的所有文件和文件夹复制到gh-pages分支的根目录下
+        uses: peaceiris/actions-gh-pages@v3  
+        with:  
+          github_token: ${{ secrets.GITHUB_TOKEN }}  
+          publish_dir: ./dist # 或者你的构建输出目录
+          keep_files: false
+          force_orphan: true
+          commit_message: 'Deploy to GitHub Pages'
       
-      # 隐私参数，如用户名、密码等，使用${{ secrets.XXX }}或者${{ env.XXX }}，参数可在setting里填写，避免泄漏
-      # - name: upload file
-      #   uses: kostyaten/ssh-server-deploy@v4
-      #   with: 
-      #     host: ${{ secrets.HOST }}
-      #     username: ${{ secrets.USERNAME }}
-      #     password: ${{ secrets.PASSWORD }}
-      #     port: 22
-      #     scp_source: "./dist"
-      #     scp_target: ${{ secrets.TARGET }}
+    # 隐私参数，如用户名、密码等，使用${{ secrets.XXX }}或者${{ env.XXX }}，参数可在setting里填写，避免泄漏
+    # - name: upload file
+    #   uses: kostyaten/ssh-server-deploy@v4
+    #   with: 
+    #     host: ${{ secrets.HOST }}
+    #     username: ${{ secrets.USERNAME }}
+    #     password: ${{ secrets.PASSWORD }}
+    #     port: 22
+    #     scp_source: "./dist"
+    #     scp_target: ${{ secrets.TARGET }}
