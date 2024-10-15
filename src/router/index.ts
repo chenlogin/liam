@@ -45,6 +45,20 @@ const routes: Array<RouteRecordRaw> = [
       },
     ],
   },
+  {
+    path: '/fabric',
+    component: Layout,
+    meta: {
+      title: 'fabric',
+    },
+    children: [
+      {
+        path: '',
+        component: () => import('@/components/FabricCanvas.vue'),
+        name: 'FabricCanvas',
+      },
+    ],
+  },
 ]
 
 const router = createRouter({
