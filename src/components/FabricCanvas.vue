@@ -84,8 +84,8 @@ export default {
       this.canvas.on('mouse:down', options => {
         console.log('===mouse:down===')
         if (eventType.indexOf(this.currentType) != -1) {
-          this.mouseFrom.x = options.e.clientX
-          this.mouseFrom.y = options.e.clientY - 50
+          this.mouseFrom.x = options.e.clientX || options.viewportPoint.x
+          this.mouseFrom.y = (options.e.clientY || options.viewportPoint.y) - 50
           this.idDrawing = true
           switch (this.currentType) {
             case 'text':
@@ -99,8 +99,8 @@ export default {
       this.canvas.on('mouse:move', options => {
         if (this.idDrawing && eventType.indexOf(this.currentType) != -1) {
           console.log('===mouse:move===')
-          this.mouseTo.x = options.e.clientX
-          this.mouseTo.y = options.e.clientY - 50
+          this.mouseTo.x = options.e.clientX || options.viewportPoint.x
+          this.mouseTo.y = (options.e.clientY || options.viewportPoint.y) - 50
           switch (this.currentType) {
             case 'line':
               this.initLine()
