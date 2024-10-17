@@ -30,7 +30,7 @@
 
 <script>
 // http://fabricjs.com/docs/fabric.Canvas.html
-import { Canvas, PencilBrush, Image, Line, Circle, Rect, Triangle, Textbox } from 'fabric'
+import { Canvas, PencilBrush, EraserBrush, Image, Line, Circle, Rect, Triangle, Textbox } from 'fabric'
 
 export default {
   data() {
@@ -40,7 +40,8 @@ export default {
       strokeWidth: 3,
       fontSize: 18,
       canvas: null,
-      pencilBrush: null,
+      pencilBrush: null, //画笔对象
+      eraserBrush: null, //橡皮对象
       drawingObject: null, //最近一次要绘制对象
       textObject: null,
       mouseFrom: {},
@@ -75,6 +76,9 @@ export default {
       this.canvas.freeDrawingBrush = this.pencilBrush
       this.canvas.freeDrawingBrush.color = this.colors
       this.canvas.freeDrawingBrush.width = this.width
+
+      //初始化橡皮
+      this.eraserBrush = new EraserBrush(this.canvas)
 
       //重新渲染画布，lower-canvas、upper-canvas
       this.canvas.renderAll()
